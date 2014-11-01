@@ -6,7 +6,7 @@ import std.stream;
 import std.file;
 import std.process;
 import mustache;
-import download.Downloader;
+import GitDownloader;
 alias std.file.write fwrite;
 
 alias MustacheEngine!(string) Mustache;
@@ -17,9 +17,8 @@ void main(string[] args){
         const string NAME = "ogre-project-template";
         const string REMOTE_FILENAME = "master";
 
-        templateDownloader = Downloader("ANtlord", NAME, REMOTE_FILENAME);
+        auto templateDownloader = new GitDownloader("ANtlord", NAME, REMOTE_FILENAME);
         templateDownloader.download(args[1].dup);
-
 
         Mustache mustache;
         auto context = new Mustache.Context;

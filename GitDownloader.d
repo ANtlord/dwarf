@@ -1,3 +1,6 @@
+import std.process;
+import std.file;
+
 class GitDownloader
 {
     protected const string REMOTE_FILENAME;
