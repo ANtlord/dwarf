@@ -1,8 +1,3 @@
-//          Copyright antlord 2014.
-// Distributed under the Boost Software License, Version 1.0.
-//    (See accompanying file LICENSE_1_0.txt or copy at
-//          http://www.boost.org/LICENSE_1_0.txt)
-
 module main;
 
 import std.stdio;
@@ -11,6 +6,7 @@ import std.stream;
 import std.file;
 import std.process;
 import mustache;
+import download.Downloader;
 alias std.file.write fwrite;
 
 alias MustacheEngine!(string) Mustache;
@@ -19,15 +15,10 @@ void main(string[] args){
     if(args.length > 1)
     {
         const string NAME = "ogre-project-template";
-        const string REMOTE_FILENAME = "master.zip";
-        const string TEMPLATE_URL = "https://github.com/ANtlord/"~NAME
-            ~"/archive/"~REMOTE_FILENAME;
-        const string DIRECTORY_PATH = getcwd();
+        const string REMOTE_FILENAME = "master";
 
-        execute(["wget", TEMPLATE_URL]);
-        execute(["unzip", REMOTE_FILENAME]);
-        rename((NAME~"-master").dup, args[1].dup);
-        remove(REMOTE_FILENAME);
+        templateDownloader = Downloader("ANtlord", NAME, REMOTE_FILENAME);
+        templateDownloader.download(args[1].dup);
 
 
         Mustache mustache;
